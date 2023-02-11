@@ -2,6 +2,15 @@
 Welcome to django-admin-taggit-ui
 =================================
 
+.. image:: https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9-blue
+   :target: https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9-blue
+   :alt: python: 3.6, 3.7, 3.8, 3.9
+
+.. image:: https://img.shields.io/badge/django-2.2%20%7C%203.0%20%7C%203.1%20%7C%203.2-orange
+   :target: https://img.shields.io/badge/django-2.2%20%7C%203.0%20%7C%203.1%20%7C%203.2-orange
+   :alt: django: 2.2, 3.0, 3.1, 3.2
+
+
 Description
 ===========
 This app provides a tag-filter and an admin-action to handle tags created with
