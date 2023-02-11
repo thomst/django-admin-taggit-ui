@@ -12,9 +12,9 @@ def read(filename):
 
 
 version = __import__("taggit_ui").__version__
-if '-dev' in version:
+if 'dev' in version:
     dev_status = 'Development Status :: 3 - Alpha'
-elif '-beta' in version:
+elif 'beta' in version:
     dev_status = 'Development Status :: 4 - Beta'
 else:
     dev_status = 'Development Status :: 5 - Production/Stable'
