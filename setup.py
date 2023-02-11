@@ -30,6 +30,7 @@ setup(
     license="BSD License",
     platforms=["OS Independent"],
     packages=find_packages(exclude=["tests"]),
+    package_data={'taggit_ui': ['templates/admin/*']},
     include_package_data=True,
     install_requires=[
         "Django<=3.2",
