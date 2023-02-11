@@ -1,4 +1,11 @@
 name: Run tests for django-admin-taggit-ui
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
   build:
 
