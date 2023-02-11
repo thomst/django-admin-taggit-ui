@@ -1,0 +1,63 @@
+{% load i18n %}
+<h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
+<ul>
+{% for choice in choices %}
+    {% if forloop.first %}
+        <li{% if choice.selected %} class="selected"{% endif %}>
+        <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">{{ choice.display }}</a></li>
+    {% else %}
+        <li{% if choice.selected %} class="selected"{% endif %}>
+            <a href="{{ choice.plus.query_string|iriencode }}" title="+ {{ choice.display }}" style="padding-right:2px;display:inline;font-size:120%{% if not choice.plus.selected %};color:#999{% endif %}">
+                {% if choice.plus.selected %}⊕{% else %}+{% endif %}
+            </a>
+            <a href="{{ choice.minus.query_string|iriencode }}" title="- {{ choice.display }}" style="padding-right:2px;display:inline;font-size:120%{% if not choice.minus.selected %};color:#999{% endif %}">
+                {% if choice.minus.selected %}⊖{% else %}-{% endif %}
+            </a>
+            <a href="{{ choice.only.query_string|iriencode }}" title="{{ choice.display }}"  style="display:inline;color:{% if choice.only.selected %}#5b80b2{% else %}#999{% endif %}">
+                {{ choice.display }}
+            </a>
+            <a class="tagapi-delete" href="/tagapi/delete/{{ choice.tag_id }}" title="delete {{ choice.display }}"  style="display:inline;float:right;color:#999">
+                ×
+            </a>
+
+        </li>
+    {% endif %}
+{% endfor %}
+</ul>
+<script>
+    (function($) {
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        $('.tagapi-delete').click(function(event) {
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'DELETE',
+                credentials: "same-origin",
+                headers: {
+                  "X-Requested-With": "XMLHttpRequest",
+                  "X-CSRFToken": getCookie('csrftoken'),
+                },
+                success: function(result) {
+                    location.reload();
+                },
+                error: function(result) {
+                    alert('Could not delete Tag.')
+                }
+            });
+            event.preventDefault();
+        })
+    })(django.jQuery);
+</script>

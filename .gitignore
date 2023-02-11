@@ -1,0 +1,9 @@
+__pycache__/
+.python-version
+.coverage
+.coveralls.yml
+/django_admin_taggit_ui.egg-info/
+/build/
+/dist/
+/.tox/
+/.vscode/

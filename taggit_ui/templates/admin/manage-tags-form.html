@@ -1,0 +1,22 @@
+ {% extends 'admin/base_site.html' %}
+
+ {% block content %}
+ <form action="" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="manage_tags" />
+    {{ form }}
+    <p>Apply for:</p>
+
+    <ul>
+    {% for object in objects %}
+        <li>
+            {{object}}
+            <input type="hidden" name="_selected_action" value="{{ object.pk }}">
+        </li>
+    {% endfor %}
+  </ul>
+
+    <input type="submit" name="add_tags" value="Add" />
+    <input type="submit" name="remove_tags" value="Remove" />
+ </form>
+ {% endblock %}
