@@ -76,6 +76,7 @@ jobs:
         pip install ${{ matrix.django-version }}
         pip install ${{ matrix.taggit-version }}
         pip install ${{ matrix.restframework-version }}
+        pip install ./
 
     - name: Run Tests
       run: coverage run --source=taggit_ui tests/manage.py test testapp
