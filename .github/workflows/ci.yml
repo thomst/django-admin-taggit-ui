@@ -14,59 +14,71 @@ jobs:
       max-parallel: 4
       matrix:
         include:
-          - python-version: "3.6"
-            django-version: Django==2.2
-
           - python-version: "3.7"
             django-version: Django==2.2
+            taggit-version: django-taggit==2.1.0
+            restframework-version: djangorestframework==3.13.0
 
           - python-version: "3.8"
             django-version: Django==2.2
-
-          - python-version: "3.6"
-            django-version: Django==3.0
+            taggit-version: django-taggit==2.1.0
+            restframework-version: djangorestframework==3.13.0
 
           - python-version: "3.7"
             django-version: Django==3.0
+            taggit-version: django-taggit==2.1.0
+            restframework-version: djangorestframework==3.13.0
 
           - python-version: "3.8"
             django-version: Django==3.0
-
-          - python-version: "3.6"
-            django-version: Django==3.1
+            taggit-version: django-taggit==2.1.0
+            restframework-version: djangorestframework==3.13.0
 
           - python-version: "3.7"
             django-version: Django==3.1
+            taggit-version: django-taggit==2.1.0
+            restframework-version: djangorestframework==3.13.0
 
           - python-version: "3.8"
             django-version: Django==3.1
-
-          - python-version: "3.6"
-            django-version: Django==3.2
+            taggit-version: django-taggit==2.1.0
+            restframework-version: djangorestframework==3.13.0
 
           - python-version: "3.7"
             django-version: Django==3.2
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
 
           - python-version: "3.8"
             django-version: Django==3.2
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
 
           - python-version: "3.9"
             django-version: Django==3.2
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
 
 
     steps:
+    - name: Checkout repository
     - uses: actions/checkout@v2
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
+
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install coverage
         pip install ${{ matrix.django-version }}
-        pip install ./
+        pip install ${{ matrix.taggit-version }}
+        pip install ${{ matrix.restframework-version }}
+
     - name: Run Tests
       run: coverage run --source=taggit_ui tests/manage.py test testapp
+
     - name: Show coverage report
       run: coverage report
