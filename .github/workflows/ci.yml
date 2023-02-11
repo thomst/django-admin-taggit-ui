@@ -72,7 +72,7 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install coverage wheel
+        pip install coverage wheel setuptools
         pip install ${{ matrix.django-version }}
         pip install ${{ matrix.taggit-version }}
         pip install ${{ matrix.restframework-version }}
