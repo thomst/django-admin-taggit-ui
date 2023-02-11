@@ -4,9 +4,10 @@ from django.utils.translation import gettext_lazy as _
 from taggit.models import TaggedItem
 
 
-class PlusMinusTagFilter(admin.SimpleListFilter):
+class TagFilter(admin.SimpleListFilter):
     """
-    PlusMinusTagFilter
+    TagFilter providing multiselect include and exclude option. Also allow to
+    easily delete tags.
     """
     title = 'Tags'
     parameter_name = 'tags'
