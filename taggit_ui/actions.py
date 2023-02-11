@@ -5,7 +5,9 @@ from taggit_ui.forms import ManageTagsForm
 
 
 def manage_tags(modeladmin, request, queryset):
-    # TODO: check if model is tagable!
+    # TODO: Check if model is tagable!
+    # TODO: Check attribute name of the TagableManager!
+    # TODO: Add option to apply tags to objects of related models.
 
     add = 'add_tags' in request.POST
     remove = 'remove_tags' in request.POST
