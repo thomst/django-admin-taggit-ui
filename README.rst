@@ -10,6 +10,10 @@ Welcome to django-admin-taggit-ui
    :target: https://img.shields.io/badge/django-2.2%20%7C%203.0%20%7C%203.1%20%7C%203.2-orange
    :alt: django: 2.2, 3.0, 3.1, 3.2
 
+.. image:: https://github.com/thomst/django-admin-taggit-ui/actions/workflows/ci.yml/badge.svg
+   :target: https://github.com/thomst/django-admin-taggit-ui/actions/workflows/ci.yml
+   :alt: Run tests for django-admin-taggit-ui
+
 
 Description
 ===========
