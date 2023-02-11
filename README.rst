@@ -23,7 +23,8 @@ Add more_admin_filters to your installed apps::
 
 Add the `TagFilter` and `manage_tag` action to your ModelAdmin::
 
-    from taggit_ui.filters import PlusMinusTagFilter
+    from taggit_ui.filters import TagFilter
+    from taggit_ui.actions import manage_tags
 
     class MyModelAdmin(admin.ModelAdmin):
         ...
@@ -32,7 +33,7 @@ Add the `TagFilter` and `manage_tag` action to your ModelAdmin::
             ...
         ]
         actions = [
-            manage_tag,
+            manage_tags,
             ...
         ]
 
