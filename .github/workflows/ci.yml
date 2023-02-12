@@ -7,8 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -81,5 +80,23 @@ jobs:
     - name: Run Tests
       run: coverage run --source=taggit_ui tests/manage.py test testapp
 
-    - name: Show coverage report
-      run: coverage report
+    - name: Create coverage lcov file
+      run: coverage lcov -o coverage.lcov
+
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        flag-name: run-${{ matrix.python-version }}-${{ matrix.django-version }}
+        path-to-lcov: coverage.lcov
+        parallel: true
+
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        parallel-finished: true
