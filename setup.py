@@ -28,6 +28,7 @@ setup(
     author="Thomas Leichtfuß",
     author_email="thomas.leichtfuss@posteo.de",
     license="BSD License",
+    url="https://github.com/thomst/django-admin-taggit-ui",
     platforms=["OS Independent"],
     packages=find_packages(exclude=["tests"]),
     package_data={'taggit_ui': ['templates/admin/*']},
