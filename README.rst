@@ -14,6 +14,10 @@ Welcome to django-admin-taggit-ui
    :target: https://github.com/thomst/django-admin-taggit-ui/actions/workflows/ci.yml
    :alt: Run tests for django-admin-taggit-ui
 
+.. image:: https://coveralls.io/repos/github/thomst/django-admin-taggit-ui/badge.svg?branch=master
+   :target: https://coveralls.io/github/thomst/django-admin-taggit-ui?branch=master
+   :alt: Coveralls
+
 
 Description
 ===========
