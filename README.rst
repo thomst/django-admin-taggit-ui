@@ -26,12 +26,12 @@ and provides a tag-filter and an admin-action to handle tags with ease within
 django's admin backend.
 
 Tag-Filter
----------
+**********
 The tag filter allows you to include and exclude mutliple tags as well as easily
 deleting tags.
 
 Admin-Action
-------------
+************
 The admin action allows you to easily add and remove tags from objects.
 
 
