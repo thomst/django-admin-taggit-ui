@@ -33,7 +33,7 @@ setup(
     package_data={'taggit_ui': ['templates/admin/*']},
     include_package_data=True,
     install_requires=[
-        "Django<=3.2",
+        "Django<=4.2",
         "django-taggit",
         "djangorestframework",
     ],
@@ -44,6 +44,8 @@ setup(
         "Framework :: Django :: 3.0",
         "Framework :: Django :: 3.1",
         "Framework :: Django :: 3.2",
+        "Framework :: Django :: 4.0",
+        "Framework :: Django :: 4.1",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",

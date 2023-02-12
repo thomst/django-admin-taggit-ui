@@ -58,6 +58,35 @@ jobs:
             taggit-version: django-taggit
             restframework-version: djangorestframework
 
+          - python-version: "3.7"
+            django-version: Django==4.0
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
+
+          - python-version: "3.8"
+            django-version: Django==4.0
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
+
+          - python-version: "3.9"
+            django-version: Django==4.0
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
+
+          - python-version: "3.7"
+            django-version: Django==4.1
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
+
+          - python-version: "3.8"
+            django-version: Django==4.1
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
+
+          - python-version: "3.9"
+            django-version: Django==4.1
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
 
     steps:
     - name: Checkout repository
