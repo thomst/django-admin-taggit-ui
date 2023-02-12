@@ -21,8 +21,18 @@ Welcome to django-admin-taggit-ui
 
 Description
 ===========
-This app provides a tag-filter and an admin-action to handle tags created with
-`taggit` within the django admin backend.
+This app is build in top of `django-taggit <https://github.com/jazzband/django-taggit>`_
+and provides a tag-filter and an admin-action to handle tags with ease within
+django's admin backend.
+
+Tag-Filter
+---------
+The tag filter allows you to include and exclude mutliple tags as well as easily
+deleting tags.
+
+Admin-Action
+------------
+The admin action allows you to easily add and remove tags from objects.
 
 
 Installation
@@ -38,7 +48,7 @@ Add more_admin_filters to your installed apps::
         ...
     ]
 
-Add the `TagFilter` and `manage_tag` action to your ModelAdmin::
+Add the :code:`TagFilter` and :code:`manage_tag` action to your ModelAdmin::
 
     from taggit_ui.filters import TagFilter
     from taggit_ui.actions import manage_tags
@@ -60,3 +70,13 @@ Extend your `url_patterns` in urls.py::
         ...
         url(r'^', include('taggit_ui.urls')),
     ]
+
+
+Limitations
+===========
+Currently this app only works with models that referencing their
+:code:`TaggableManager` as an attribute named :code:`tags`::
+
+    class MyModel(models.Model):
+        tags = TaggableManager(blank=True)
+        ...
