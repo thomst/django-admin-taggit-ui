@@ -1,8 +1,8 @@
 
-from django.urls import re_path
-from .views import DeleteTagAPI
+from django.urls import path
+from .views import RemoveTagApi
 
 
 urlpatterns = [
-    re_path(r'^tagapi/delete/(?P<id>\d+)', DeleteTagAPI.as_view(), name='delete_tag_api'),
+    path('remove-tag/<int:tag_id>/from/<slug:app_label>/<slug:model_name>/', RemoveTagApi.as_view(), name='remove-tag'),
 ]

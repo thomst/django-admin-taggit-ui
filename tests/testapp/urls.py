@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include
-from django.urls import re_path
+from django.urls import path
 
 
 urlpatterns = [
-    re_path(r'^admin/', admin.site.urls),
-    re_path(r'^', include('taggit_ui.urls')),
+    path('admin/', admin.site.urls),
+    path('', include('taggit_ui.urls')),
 ]
