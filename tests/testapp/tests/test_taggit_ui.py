@@ -80,9 +80,6 @@ class TaggitUiTestCase(TestCase):
         self.assertEqual(len(objs_by_tag), 4)
 
     def test_02_api(self):
-        # get url.
-
-
         # Delete tag.
         tag1 = Tag.objects.get(name='one')
         url = reverse('remove-tag', kwargs=dict(tag_id=tag1.id, app_label='testapp', model_name='modela'))
