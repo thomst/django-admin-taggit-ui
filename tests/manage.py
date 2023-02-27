@@ -3,7 +3,7 @@
 import os
 import sys
 
-sys.path.insert(1, os.path.abspath('..'))
+sys.path.insert(1, os.path.abspath('__file__/..'))
 
 
 def main():
