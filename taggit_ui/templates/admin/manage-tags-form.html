@@ -4,9 +4,15 @@
  <form action="" method="post">
     {% csrf_token %}
     <input type="hidden" name="action" value="manage_tags" />
-    {{ form }}
-    <p>Apply for:</p>
+    <table>{{ tag_form }}</table>
+    <h3>You can include objects of related models.</h3>
+    <table>{{ include_form }}</table>
 
+    <br>
+    <input type="submit" name="add" value="Add" />
+    <input type="submit" name="remove" value="Remove" />
+
+    <p>Apply for:</p>
     <ul>
     {% for object in objects %}
         <li>
@@ -14,9 +20,7 @@
             <input type="hidden" name="_selected_action" value="{{ object.pk }}">
         </li>
     {% endfor %}
-  </ul>
+    </ul>
 
-    <input type="submit" name="add_tags" value="Add" />
-    <input type="submit" name="remove_tags" value="Remove" />
  </form>
  {% endblock %}
