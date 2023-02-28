@@ -5,22 +5,20 @@
     {% csrf_token %}
     <input type="hidden" name="action" value="manage_tags" />
     <table>{{ tag_form }}</table>
-    <h3>You can include objects of related models.</h3>
-    <table>{{ include_form }}</table>
+    {% if show_include_form %}
+        <h3>You can include objects of related models.</h3>
+        <table>{{ include_form }}</table>
+    {% else %}
+        {{ include_form }}
+    {% endif %}
 
     <br>
     <input type="submit" name="add" value="Add" />
     <input type="submit" name="remove" value="Remove" />
 
-    <p>Apply for:</p>
-    <ul>
     {% for object in objects %}
-        <li>
-            {{object}}
-            <input type="hidden" name="_selected_action" value="{{ object.pk }}">
-        </li>
+        <input type="hidden" name="_selected_action" value="{{ object.pk }}">
     {% endfor %}
-    </ul>
 
  </form>
  {% endblock %}

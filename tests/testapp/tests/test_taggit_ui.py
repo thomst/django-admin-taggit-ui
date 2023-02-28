@@ -52,7 +52,8 @@ class TaggitUiTestCase(TestCase):
         post_data = dict()
         post_data['action'] = 'manage_tags'
         post_data['tags'] = ' '.join(tags)
-        post_data['add_tags'] = 'Add'
+        post_data['root'] = True
+        post_data['add'] = 'Add'
         post_data['_selected_action'] = ids
 
         resp = self.client.post(self.url, post_data, follow=True)
@@ -71,7 +72,8 @@ class TaggitUiTestCase(TestCase):
         post_data = dict()
         post_data['action'] = 'manage_tags'
         post_data['tags'] = ','.join(tags)
-        post_data['remove_tags'] = 'Remove'
+        post_data['root'] = True
+        post_data['remove'] = 'Remove'
         post_data['_selected_action'] = ids
 
         resp = self.client.post(self.url, post_data, follow=True)
