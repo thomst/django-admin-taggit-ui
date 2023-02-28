@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from .models import ModelA
 from taggit_ui.actions import manage_tags
 from taggit_ui.filters import TagFilter
+from .models import ModelA
 
 
 @admin.register(ModelA)
