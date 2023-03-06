@@ -3,6 +3,7 @@
 from django.contrib import admin
 from modeltree import ModelTree
 from taggit_ui.actions import manage_tags
+from taggit_ui.actions import TagManager
 from taggit_ui.filters import TagFilter
 from .models import ModelA
 from testapp.models import ModelOne, ModelTwo
@@ -32,6 +33,7 @@ class ModelOneAdmin(TagViewMixin, admin.ModelAdmin):
         'id',
         'tag_view',
     )
+    actions = [TagManager(ModelTree)]
 
 
 @admin.register(ModelTwo)

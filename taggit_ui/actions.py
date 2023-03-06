@@ -51,37 +51,43 @@ class FlatModelTree(ModelTree):
     MAX_DEPTH = 0
 
 
-def manage_tags(modeladmin, request, queryset):
-    # Create model-tree and form-class.
-    base_tree_class = getattr(modeladmin, 'taggit_ui_modeltree', FlatModelTree)
-    tree_class = type('TaggitUiTree', (base_tree_class, TaggitUiModelTreeMixin), dict())
-    modeltree = tree_class(modeladmin.model, queryset)
-    include_form_class = modeltree.build_form_class()
-    show_include_form = bool(modeltree.children)
+class TagManager:
 
-    # Initialize forms.
-    task = 'add' in request.POST and 'add' or 'remove' in request.POST and 'remove'
-    if task:
-        tag_form = ManageTagsForm(request.POST)
-        include_form = include_form_class(request.POST)
-    else:
-        tag_form = ManageTagsForm()
-        include_form = include_form_class(initial=dict(root=True))
+    def __init__(self, tree_class=FlatModelTree):
+        self.tree_class = type('TaggitUiTree', (tree_class, TaggitUiModelTreeMixin), dict())
+        self.__name__ = 'manage_tags'
 
-    # Render the forms.
-    if not tag_form.is_valid() or not include_form.is_valid():
-        return render(request, 'admin/manage-tags-form.html', {
-            'objects': queryset.order_by('pk'),
-            'tag_form': tag_form,
-            'include_form': include_form,
-            'show_include_form': show_include_form,
-            'title': 'Manage Tags'
-            })
+    def __call__(self, modeladmin, request, queryset):
+        modeltree = self.tree_class(modeladmin.model, queryset)
+        include_form_class = modeltree.build_form_class()
+        show_include_form = bool(modeltree.children)
 
-    # Set tags.
-    tags = tag_form.cleaned_data['tags']
-    includes = [k for k, v in include_form.cleaned_data.items() if v]
-    for node in modeltree.iterate(filter=lambda n: n.field_path in includes):
-        node.process_tags(task, tags)
+        # Initialize forms.
+        task = 'add' in request.POST and 'add' or 'remove' in request.POST and 'remove'
+        if task:
+            tag_form = ManageTagsForm(request.POST)
+            include_form = include_form_class(request.POST)
+        else:
+            tag_form = ManageTagsForm()
+            include_form = include_form_class(initial=dict(root=True))
 
-    return HttpResponseRedirect(request.get_full_path())
+        # Render the forms.
+        if not tag_form.is_valid() or not include_form.is_valid():
+            return render(request, 'admin/manage-tags-form.html', {
+                'objects': queryset.order_by('pk'),
+                'tag_form': tag_form,
+                'include_form': include_form,
+                'show_include_form': show_include_form,
+                'title': 'Manage Tags'
+                })
+
+        # Set tags.
+        tags = tag_form.cleaned_data['tags']
+        includes = [k for k, v in include_form.cleaned_data.items() if v]
+        for node in modeltree.iterate(filter=lambda n: n.field_path in includes):
+            node.process_tags(task, tags)
+
+        return HttpResponseRedirect(request.get_full_path())
+
+
+manage_tags = TagManager()
