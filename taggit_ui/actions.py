@@ -34,7 +34,7 @@ class TaggitUiModelTreeMixin:
     @property
     def form_field(self):
         form_field = forms.BooleanField(
-            label=self.label_path,
+            label=' '.join(str(n) for n in self.path),
             required=False)
         return form_field
 
@@ -81,7 +81,7 @@ def manage_tags(modeladmin, request, queryset):
     # Set tags.
     tags = tag_form.cleaned_data['tags']
     includes = [k for k, v in include_form.cleaned_data.items() if v]
-    for node in modeltree.iterate(filter=lambda n: n.name in includes):
+    for node in modeltree.iterate(filter=lambda n: n.field_path in includes):
         node.process_tags(task, tags)
 
     return HttpResponseRedirect(request.get_full_path())
