@@ -22,3 +22,39 @@ class ModelA(BaseModel):
 class ModelB(BaseModel):
     id = models.AutoField(primary_key=True)
     tags = TaggableManager(blank=True)
+
+
+class ModelOne(BaseModel):
+    tags = TaggableManager(blank=True)
+    model_two = models.ManyToManyField(
+        'ModelTwo',
+        related_name='model_one',
+        blank=True)
+
+
+class ModelTwo(BaseModel):
+    tags = TaggableManager(blank=True)
+    model_three = models.ForeignKey(
+        'ModelThree',
+        related_name='model_two',
+        blank=True, null=True,
+        on_delete=models.SET_NULL)
+
+class ModelThree(BaseModel):
+    pass
+
+
+class ModelFour(BaseModel):
+    tags = TaggableManager(blank=True)
+    model_three = models.OneToOneField(
+        'ModelThree',
+        related_name='model_four',
+        blank=True, null=True,
+        on_delete=models.SET_NULL)
+
+
+class ModelFive(BaseModel):
+    model_two = models.ManyToManyField(
+        'ModelThree',
+        related_name='model_five',
+        blank=True)
