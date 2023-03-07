@@ -52,10 +52,10 @@ class FlatModelTree(ModelTree):
 
 
 class TagManager:
+    __name__ = 'manage_tags'
 
     def __init__(self, tree_class=FlatModelTree):
         self.tree_class = type('TaggitUiTree', (tree_class, TaggitUiModelTreeMixin), dict())
-        self.__name__ = 'manage_tags'
 
     def __call__(self, modeladmin, request, queryset):
         modeltree = self.tree_class(modeladmin.model, queryset)
@@ -90,4 +90,4 @@ class TagManager:
         return HttpResponseRedirect(request.get_full_path())
 
 
-manage_tags = TagManager()
+tag_manager = TagManager()

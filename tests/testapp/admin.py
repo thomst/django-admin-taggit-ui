@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from modeltree import ModelTree
-from taggit_ui.actions import manage_tags
+from taggit_ui.actions import tag_manager
 from taggit_ui.actions import TagManager
 from taggit_ui.filters import TagFilter
 from .models import ModelA
@@ -11,7 +11,7 @@ from testapp.models import ModelOne, ModelTwo
 
 class TagViewMixin:
     list_filter = [TagFilter]
-    actions = [manage_tags]
+    actions = [tag_manager]
 
     def tag_view(self, obj):
         return ", ".join(o.name for o in obj.tags.all()) or '-'
