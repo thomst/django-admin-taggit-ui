@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.http import urlencode
 from taggit.models import Tag
+from taggit_ui.actions import TagManager
 from testapp.models import ModelA
 from testapp.models import ModelB
 from testapp.management.commands.createtestdata import create_test_data
@@ -19,6 +20,7 @@ class TaggitUiTestCase(TestCase):
         self.admin = User.objects.get(username='admin')
         self.client.force_login(self.admin)
         self.url = reverse('admin:testapp_modela_changelist')
+        self.action = TagManager.ACTION_NAME
 
     def test_01_filtering(self):
         queries = (
@@ -36,21 +38,26 @@ class TaggitUiTestCase(TestCase):
             self.assertIn('{} selected'.format(count), resp.content.decode('utf8'))
 
     def test_02_action(self):
+        # Check if action is listed in dropdown menu.
+        resp = self.client.get(self.url)
+        self.assertContains(resp, self.action)
+
         # Render action form.
         ids = [i for i in range(1,7)]
         post_data = dict()
-        post_data['action'] = 'manage_tags'
+        post_data['action'] = self.action
         post_data['_selected_action'] = ids
 
         resp = self.client.post(self.url, post_data, follow=True)
         self.assertEqual(resp.status_code, 200)
-        self.assertContains(resp, '<h1>Manage Tags</h1>')
+        self.assertContains(resp, self.action)
+        self.assertContains(resp, self.action.capitalize().replace('_', ' '))
 
         # Add tags.
         tags = ['test1', 'test2']
         tag1, tag2 = tags
         post_data = dict()
-        post_data['action'] = 'manage_tags'
+        post_data['action'] = self.action
         post_data['tags'] = ' '.join(tags)
         post_data['root'] = True
         post_data['add'] = 'Add'
@@ -70,7 +77,7 @@ class TaggitUiTestCase(TestCase):
         objs_by_three = ModelA.objects.filter(tags__name__in=['three'])
         ids = [o.id for o in objs_by_three]
         post_data = dict()
-        post_data['action'] = 'manage_tags'
+        post_data['action'] = self.action
         post_data['tags'] = ','.join(tags)
         post_data['root'] = True
         post_data['remove'] = 'Remove'

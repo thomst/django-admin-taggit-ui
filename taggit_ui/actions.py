@@ -8,7 +8,7 @@ from taggit_ui.forms import ManageTagsForm
 from taggit_ui.forms import IncludeForm
 
 
-class TaggitUiModelTreeMixin:
+class TreeMixin:
     @property
     def is_taggible(self):
         return bool(self.tag_manager)
@@ -52,10 +52,12 @@ class FlatModelTree(ModelTree):
 
 
 class TagManager:
-    __name__ = 'manage_tags'
+    ACTION_NAME = 'set_or_remove_tags'
 
     def __init__(self, tree_class=FlatModelTree):
-        self.tree_class = type('TaggitUiTree', (tree_class, TaggitUiModelTreeMixin), dict())
+        self.tree_class = type('Tree', (tree_class, TreeMixin), dict())
+        self.__name__ = self.ACTION_NAME
+        self.title = self.ACTION_NAME.capitalize().replace('_', ' ')
 
     def __call__(self, modeladmin, request, queryset):
         modeltree = self.tree_class(modeladmin.model, queryset)
@@ -78,7 +80,8 @@ class TagManager:
                 'tag_form': tag_form,
                 'include_form': include_form,
                 'show_include_form': show_include_form,
-                'title': 'Manage Tags'
+                'title': self.title,
+                'action': self.ACTION_NAME,
                 })
 
         # Set tags.
