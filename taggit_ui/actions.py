@@ -33,8 +33,9 @@ class TreeMixin:
 
     @property
     def form_field(self):
+        label = '{} ({})'.format('.'.join(str(n) for n in self.path), len(self.items))
         form_field = forms.BooleanField(
-            label=' '.join(str(n) for n in self.path),
+            label=label,
             required=False)
         return form_field
 
