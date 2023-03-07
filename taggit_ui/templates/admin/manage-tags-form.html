@@ -6,7 +6,7 @@
     <input type="hidden" name="action" value="{{ action }}" />
     <table>{{ tag_form }}</table>
     {% if show_include_form %}
-        <h3>You can include objects of related models.</h3>
+        <br><h2>Include objects of related models</h2>
         <table>{{ include_form }}</table>
     {% else %}
         {{ include_form }}
