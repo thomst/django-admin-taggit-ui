@@ -11,6 +11,8 @@ class ManageTagsForm(forms.Form):
 
 
 class IncludeForm(forms.Form):
+    ERROR_MSG = 'At least one include option must be checked.'
+
     def clean(self):
         """
         At least one include option must be checked.
@@ -18,7 +20,6 @@ class IncludeForm(forms.Form):
         cleaned_data = super().clean()
 
         if not any(cleaned_data.values()):
-            msg = 'At least one include option must be checked.'
-            raise forms.ValidationError(msg)
+            raise forms.ValidationError(self.ERROR_MSG)
 
         return cleaned_data
