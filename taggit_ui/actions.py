@@ -95,3 +95,6 @@ class TagManager:
 
 
 tag_manager = TagManager()
+
+# For backwards compatibility:
+manage_tags = tag_manager
