@@ -37,7 +37,7 @@ setup(
         "Django<=4.2",
         "django-taggit",
         "djangorestframework",
-        "django-modeltree",
+        "django-modeltree>=0.3",
     ],
     classifiers=[
         dev_status,
