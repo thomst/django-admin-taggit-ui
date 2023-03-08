@@ -132,6 +132,12 @@ class TaggitUiTestCase(TestCase):
         tree_class = type('Tree', (ModelTree, TreeMixin), dict())
         tree = tree_class(ModelOne, items)
 
+        # Check if all taggible models are found.
+        self.assertIn(ModelOne, [n.model for n in tree.iterate_taggible()])
+        self.assertIn(ModelTwo, [n.model for n in tree.iterate_taggible()])
+        self.assertIn(ModelFour, [n.model for n in tree.iterate_taggible()])
+        self.assertEqual(len([n for n in tree.iterate_taggible()]), 3)
+
         # Render action form.
         ids = [i for i in range(1,7)]
         items = ModelOne.objects.filter(id__in=ids)
