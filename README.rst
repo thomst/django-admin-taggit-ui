@@ -41,6 +41,9 @@ Install from pypi.org::
 
     pip install django-admin-taggit-ui
 
+
+Setup
+=====
 Add more_admin_filters to your installed apps::
 
     INSTALLED_APPS = [
@@ -48,10 +51,17 @@ Add more_admin_filters to your installed apps::
         ...
     ]
 
+Extend your :code:`url_patterns` in urls.py::
+
+    urlpatterns = [
+        ...
+        url(r'^', include('taggit_ui.urls')),
+    ]
+
 Add the :code:`TagFilter` and :code:`manage_tag` action to your ModelAdmin::
 
     from taggit_ui.filters import TagFilter
-    from taggit_ui.actions import manage_tags
+    from taggit_ui.actions import tag_manager
 
     class MyModelAdmin(admin.ModelAdmin):
         ...
@@ -60,23 +70,23 @@ Add the :code:`TagFilter` and :code:`manage_tag` action to your ModelAdmin::
             ...
         ]
         actions = [
-            manage_tags,
+            tag_manager,
             ...
         ]
 
-Extend your `url_patterns` in urls.py::
+It is possible to optionally tag related items of other models using the admin
+action. Therefore initialize the :code:`TagManager`` class with a
+`ModelTree <https://github.com/thomst/django-modeltree>`_::
 
-    urlpatterns = [
+    from taggit_ui.actions import TagManager
+    from modeltree import ModelTree
+
+    class MyModelAdmin(admin.ModelAdmin):
         ...
-        url(r'^', include('taggit_ui.urls')),
-    ]
+        actions = [
+            TagManager(ModelTree),
+            ...
+        ]
 
-
-Limitations
-===========
-Currently this app only works with models that referencing their
-:code:`TaggableManager` as an attribute named :code:`tags`::
-
-    class MyModel(models.Model):
-        tags = TaggableManager(blank=True)
-        ...
+The admin action will then render its form with all taggible related Models as
+checkbox fields and the count of related items belonging to these models.
