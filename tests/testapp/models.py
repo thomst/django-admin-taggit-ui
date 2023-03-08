@@ -25,7 +25,7 @@ class ModelB(BaseModel):
 
 
 class ModelOne(BaseModel):
-    tags = TaggableManager(blank=True)
+    xtags = TaggableManager(blank=True)
     model_two = models.ManyToManyField(
         'ModelTwo',
         related_name='model_one',
@@ -33,7 +33,7 @@ class ModelOne(BaseModel):
 
 
 class ModelTwo(BaseModel):
-    tags = TaggableManager(blank=True)
+    xtags = TaggableManager(blank=True)
     model_three = models.ForeignKey(
         'ModelThree',
         related_name='model_two',
@@ -45,7 +45,7 @@ class ModelThree(BaseModel):
 
 
 class ModelFour(BaseModel):
-    tags = TaggableManager(blank=True)
+    xtags = TaggableManager(blank=True)
     model_three = models.OneToOneField(
         'ModelThree',
         related_name='model_four',

@@ -35,6 +35,10 @@ class ModelOneAdmin(TagViewMixin, admin.ModelAdmin):
     )
     actions = [TagManager(ModelTree)]
 
+    def tag_view(self, obj):
+        return ", ".join(o.name for o in obj.xtags.all()) or '-'
+    tag_view.short_description = 'tags'
+
 
 @admin.register(ModelTwo)
 class ModelTwoAdmin(TagViewMixin, admin.ModelAdmin):
@@ -42,3 +46,7 @@ class ModelTwoAdmin(TagViewMixin, admin.ModelAdmin):
         'id',
         'tag_view',
     )
+
+    def tag_view(self, obj):
+        return ", ".join(o.name for o in obj.xtags.all()) or '-'
+    tag_view.short_description = 'tags'

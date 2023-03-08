@@ -12,6 +12,8 @@ from taggit_ui.forms import IncludeForm
 from testapp.models import ModelA
 from testapp.models import ModelB
 from testapp.models import ModelOne
+from testapp.models import ModelTwo
+from testapp.models import ModelFour
 from testapp.management.commands.createtestdata import create_test_data
 
 
@@ -177,5 +179,5 @@ class TaggitUiTestCase(TestCase):
 
         for node in tree.iterate_taggible():
             for item in node.items:
-                self.assertIn(tag1, item.tags.values_list('name', flat=True))
-                self.assertIn(tag2, item.tags.values_list('name', flat=True))
+                self.assertIn(tag1, item.xtags.values_list('name', flat=True))
+                self.assertIn(tag2, item.xtags.values_list('name', flat=True))
