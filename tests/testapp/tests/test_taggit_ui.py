@@ -8,6 +8,7 @@ from taggit.models import Tag
 from modeltree import ModelTree
 from taggit_ui.actions import TreeMixin
 from taggit_ui.actions import TagManager
+from taggit_ui.forms import IncludeForm
 from testapp.models import ModelA
 from testapp.models import ModelB
 from testapp.models import ModelOne
@@ -120,7 +121,7 @@ class TaggitUiTestCase(TestCase):
         self.assertEqual(resp.status_code, 404)
 
         # Unkown model.
-        url = reverse('remove-tag', kwargs=dict(tag_id=tag1.id, app_label='testapp', model_name='dummy'))
+        url = reverse('remove-tag', kwargs=dict(tag_id=tag2.id, app_label='testapp', model_name='dummy'))
         resp = self.client.delete(url, follow=True)
         self.assertEqual(resp.status_code, 404)
 
@@ -144,9 +145,19 @@ class TaggitUiTestCase(TestCase):
         for node in tree.iterate_taggible():
             self.assertContains(resp, node.field_path)
 
-        # Submit action form.
+        # Submit action form without a modeltree path checked.
         tags = ['test1', 'test2']
         tag1, tag2 = tags
+        post_data = dict()
+        post_data['action'] = self.action
+        post_data['tags'] = ' '.join(tags)
+        post_data['add'] = 'Add'
+        post_data['_selected_action'] = ids
+        resp = self.client.post(url, post_data, follow=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, IncludeForm.ERROR_MSG)
+
+        # Submit action form.
         post_data = dict()
         post_data['action'] = self.action
         post_data['tags'] = ' '.join(tags)
