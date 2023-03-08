@@ -5,9 +5,12 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.http import urlencode
 from taggit.models import Tag
+from modeltree import ModelTree
+from taggit_ui.actions import TreeMixin
 from taggit_ui.actions import TagManager
 from testapp.models import ModelA
 from testapp.models import ModelB
+from testapp.models import ModelOne
 from testapp.management.commands.createtestdata import create_test_data
 
 
@@ -88,7 +91,7 @@ class TaggitUiTestCase(TestCase):
         objs_by_tag = ModelA.objects.filter(tags__name__in=[tag1])
         self.assertEqual(len(objs_by_tag), 4)
 
-    def test_02_api(self):
+    def test_03_api(self):
         # Delete tag.
         tag1 = Tag.objects.get(name='one')
         url = reverse('remove-tag', kwargs=dict(tag_id=tag1.id, app_label='testapp', model_name='modela'))
@@ -120,3 +123,42 @@ class TaggitUiTestCase(TestCase):
         url = reverse('remove-tag', kwargs=dict(tag_id=tag1.id, app_label='testapp', model_name='dummy'))
         resp = self.client.delete(url, follow=True)
         self.assertEqual(resp.status_code, 404)
+
+    def test_04_modeltree_tagging(self):
+        url = reverse('admin:testapp_modelone_changelist')
+        items = ModelOne.objects.filter(id__in=range(1,7))
+        ids = items.values_list('id', flat=True)
+        tree_class = type('Tree', (ModelTree, TreeMixin), dict())
+        tree = tree_class(ModelOne, items)
+
+        # Render action form.
+        ids = [i for i in range(1,7)]
+        items = ModelOne.objects.filter(id__in=ids)
+        post_data = dict()
+        post_data['action'] = self.action
+        post_data['_selected_action'] = ids
+
+        resp = self.client.post(url, post_data, follow=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, self.action)
+        for node in tree.iterate_taggible():
+            self.assertContains(resp, node.field_path)
+
+        # Submit action form.
+        tags = ['test1', 'test2']
+        tag1, tag2 = tags
+        post_data = dict()
+        post_data['action'] = self.action
+        post_data['tags'] = ' '.join(tags)
+        post_data['add'] = 'Add'
+        post_data['_selected_action'] = ids
+        for node in tree.iterate_taggible():
+            post_data[node.field_path] = True
+
+        resp = self.client.post(url, post_data, follow=True)
+        self.assertEqual(resp.status_code, 200)
+
+        for node in tree.iterate_taggible():
+            for item in node.items:
+                self.assertIn(tag1, item.tags.values_list('name', flat=True))
+                self.assertIn(tag2, item.tags.values_list('name', flat=True))
