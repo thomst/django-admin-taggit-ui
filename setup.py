@@ -3,6 +3,7 @@
 import os
 from setuptools import setup
 from setuptools import find_packages
+from pathlib import Path
 
 
 def read(filename):
@@ -11,7 +12,15 @@ def read(filename):
         return file.read()
 
 
-version = __import__("taggit_ui").__version__
+def version():
+    """Get the local package version."""
+    namespace = {}
+    path = Path("taggit_ui", "__version__.py")
+    exec(path.read_text(), namespace)
+    return namespace["__version__"]
+
+
+version = version()
 if 'dev' in version:
     dev_status = 'Development Status :: 3 - Alpha'
 elif 'beta' in version:
