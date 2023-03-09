@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.http import urlencode
 from taggit.models import Tag
 from modeltree import ModelTree
+from taggit_ui import __version__
 from taggit_ui.actions import TreeMixin
 from taggit_ui.actions import TagManager
 from taggit_ui.forms import IncludeForm
