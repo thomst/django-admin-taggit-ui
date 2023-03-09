@@ -1,4 +1,4 @@
-name: Run tests for django-admin-taggit-ui
+name: CI
 
 on:
   push:
