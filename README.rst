@@ -58,6 +58,14 @@ Extend your :code:`url_patterns` in urls.py::
         url(r'^', include('taggit_ui.urls')),
     ]
 
+Extend your :code:`url_patterns` in urls.py in Django Version 4.2 or newer::
+
+    from django.urls re_path
+    urlpatterns = [
+        ...
+        re_path(r'^', include('taggit_ui.urls')),
+    ]
+
 Add the :code:`TagFilter` and :code:`manage_tag` action to your ModelAdmin::
 
     from taggit_ui.filters import TagFilter
