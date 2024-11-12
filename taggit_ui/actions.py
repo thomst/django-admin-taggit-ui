@@ -28,8 +28,7 @@ class TreeMixin:
                 getattr(getattr(item, self.tag_manager), task)(*tags)
 
     def iterate_taggible(self):
-        filter = lambda n: n.is_taggible
-        return self.iterate(filter=filter)
+        return self.iterate(filter=lambda n: n.is_taggible)
 
     @property
     def form_field(self):
