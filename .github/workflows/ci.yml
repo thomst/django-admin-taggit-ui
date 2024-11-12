@@ -13,12 +13,7 @@ jobs:
       max-parallel: 4
       matrix:
         include:
-          - python-version: "3.7"
-            django-version: Django==2.2
-            taggit-version: django-taggit==2.1.0
-            restframework-version: djangorestframework==3.13.0
-
-          - python-version: "3.7"
+          - python-version: "3.8"
             django-version: Django==3.0
             taggit-version: django-taggit==2.1.0
             restframework-version: djangorestframework==3.13.0
@@ -44,7 +39,17 @@ jobs:
             restframework-version: djangorestframework
 
           - python-version: "3.10"
-            django-version: Django==4.1
+            django-version: Django==4.2
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
+
+          - python-version: "3.11"
+            django-version: Django==5.0
+            taggit-version: django-taggit
+            restframework-version: djangorestframework
+
+          - python-version: "3.11"
+            django-version: Django==5.1
             taggit-version: django-taggit
             restframework-version: djangorestframework
 
