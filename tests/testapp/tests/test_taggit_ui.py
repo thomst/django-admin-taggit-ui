@@ -14,6 +14,7 @@ from testapp.models import ModelA
 from testapp.models import ModelB
 from testapp.models import ModelOne
 from testapp.models import ModelTwo
+from testapp.models import ModelThree
 from testapp.models import ModelFour
 from testapp.management.commands.createtestdata import create_test_data
 
@@ -136,10 +137,12 @@ class TaggitUiTestCase(TestCase):
         tree = tree_class(ModelOne, items)
 
         # Check if all taggible models are found.
-        self.assertIn(ModelOne, [n.model for n in tree.iterate_taggible()])
-        self.assertIn(ModelTwo, [n.model for n in tree.iterate_taggible()])
-        self.assertIn(ModelFour, [n.model for n in tree.iterate_taggible()])
-        self.assertEqual(len([n for n in tree.iterate_taggible()]), 3)
+        taggible_models = [n.model for n in tree.iterate_taggible()]
+        self.assertIn(ModelOne, taggible_models)
+        self.assertIn(ModelTwo, taggible_models)
+        self.assertIn(ModelFour, taggible_models)
+        self.assertNotIn(ModelThree, taggible_models)
+        self.assertEqual(len(taggible_models), 3)
 
         # Render action form.
         ids = [i for i in range(1,7)]
