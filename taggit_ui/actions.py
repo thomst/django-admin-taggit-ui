@@ -41,7 +41,7 @@ class TreeMixin:
     def build_form_class(self):
         fields = dict()
         for node in self.iterate_taggible():
-            fields[node.field_path] = node.form_field
+            fields[node.field_path or 'root'] = node.form_field
         if not self.root.children:
             fields['root'].widget = forms.HiddenInput(attrs=dict(value=True))
         return type('IncludeForm', (IncludeForm,), fields)
@@ -65,6 +65,7 @@ class TagManager:
         show_include_form = bool(modeltree.children)
 
         # Initialize forms.
+        # FIXME: This is weird and ugly...
         task = 'add' in request.POST and 'add' or 'remove' in request.POST and 'remove'
         if task:
             tag_form = ManageTagsForm(request.POST)
@@ -87,7 +88,8 @@ class TagManager:
         # Set tags.
         tags = tag_form.cleaned_data['tags']
         includes = [k for k, v in include_form.cleaned_data.items() if v]
-        for node in modeltree.iterate(filter=lambda n: n.field_path in includes):
+        node_filter = lambda n: not n.field_path or n.field_path in includes
+        for node in modeltree.iterate(filter=node_filter):
             node.process_tags(task, tags)
 
         return HttpResponseRedirect(request.get_full_path())

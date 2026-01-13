@@ -152,7 +152,7 @@ class TaggitUiTestCase(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertContains(resp, self.action)
         for node in tree.iterate_taggible():
-            self.assertContains(resp, node.field_path)
+            self.assertContains(resp, node.field_path or 'root')
 
         # Submit action form without a modeltree path checked.
         tags = ['test1', 'test2']
