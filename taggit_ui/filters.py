@@ -27,7 +27,7 @@ class TagFilter(admin.SimpleListFilter):
                 tag_id=tag.id,
                 app_label=model_admin.model._meta.app_label,
                 model_name=model_admin.model._meta.model_name)
-            url_path = reverse('remove-tag', kwargs=kwargs)
+            url_path = reverse('remove-tag-from-all-by-id', kwargs=kwargs)
             choices.append((tag.name, url_path))
         choices.sort()
         return choices

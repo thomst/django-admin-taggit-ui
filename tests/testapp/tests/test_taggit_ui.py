@@ -96,39 +96,6 @@ class TaggitUiTestCase(TestCase):
         objs_by_tag = ModelA.objects.filter(tags__name__in=[tag1])
         self.assertEqual(len(objs_by_tag), 4)
 
-    def test_03_api(self):
-        # Delete tag.
-        tag1 = Tag.objects.get(name='one')
-        url = reverse('remove-tag', kwargs=dict(tag_id=tag1.id, app_label='testapp', model_name='modela'))
-        resp = self.client.delete(url, follow=True)
-        self.assertEqual(resp.status_code, 204)
-        objs_by_tag = ModelA.objects.filter(tags__name__in=[tag1.name])
-        self.assertEqual(len(objs_by_tag), 0)
-        self.assertFalse(objs_by_tag)
-        self.assertRaises(Tag.DoesNotExist, Tag.objects.get, pk=tag1.id)
-
-        # Remove tag that's linked with objects of two different models.
-        tag2 = Tag.objects.get(name='two')
-        ModelB.objects.get(pk=1).tags.add(tag2.name)
-        url = reverse('remove-tag', kwargs=dict(tag_id=tag2.id, app_label='testapp', model_name='modela'))
-        resp = self.client.delete(url, follow=True)
-        self.assertEqual(resp.status_code, 204)
-        objs_by_tag = ModelA.objects.filter(tags__name__in=[tag2.name])
-        self.assertEqual(len(objs_by_tag), 0)
-        self.assertFalse(objs_by_tag)
-        self.assertTrue(Tag.objects.get(pk=tag2.id))
-        self.assertTrue(Tag.objects.get(pk=tag2.id))
-
-        # Unkown tag-id.
-        url = reverse('remove-tag', kwargs=dict(tag_id=1234, app_label='testapp', model_name='modela'))
-        resp = self.client.delete(url, follow=True)
-        self.assertEqual(resp.status_code, 404)
-
-        # Unkown model.
-        url = reverse('remove-tag', kwargs=dict(tag_id=tag2.id, app_label='testapp', model_name='dummy'))
-        resp = self.client.delete(url, follow=True)
-        self.assertEqual(resp.status_code, 404)
-
     def test_04_modeltree_tagging(self):
         url = reverse('admin:testapp_modelone_changelist')
         items = ModelOne.objects.filter(id__in=range(1,7))

@@ -20,5 +20,5 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('taggit_ui.urls')),
+    path('', include('taggit_api.urls')),
 ]

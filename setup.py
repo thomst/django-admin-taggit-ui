@@ -46,6 +46,7 @@ setup(
         "Django",
         "django-taggit",
         "djangorestframework",
+        "django-taggit-api",
         "django-modeltree>=0.9",
     ],
     classifiers=[

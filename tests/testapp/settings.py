@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'testapp',
     'taggit',
+    'taggit_api',
     'taggit_ui',
     'django.contrib.admin',
     'django.contrib.auth',
