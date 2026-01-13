@@ -31,11 +31,12 @@ class TreeMixin:
         return self.iterate(filter=lambda n: n.is_taggible)
 
     @property
+    def label(self):
+        return f'{self} ({len(self.items)})'
+
+    @property
     def form_field(self):
-        label = '{} ({})'.format('.'.join(str(n) for n in self.path), len(self.items))
-        form_field = forms.BooleanField(
-            label=label,
-            required=False)
+        form_field = forms.BooleanField(label=self.label, required=False)
         return form_field
 
     def build_form_class(self):
