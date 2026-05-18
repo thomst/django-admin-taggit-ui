@@ -47,6 +47,8 @@ Setup
 Add more_admin_filters to your installed apps::
 
     INSTALLED_APPS = [
+
+        'taggit_api',
         'taggit_ui',
         ...
     ]
@@ -55,7 +57,7 @@ Extend your :code:`url_patterns` in urls.py::
 
     urlpatterns = [
         ...
-        url(r'^', include('taggit_ui.urls')),
+        path('', include('taggit_api.urls')),
     ]
 
 Add the :code:`TagFilter` and :code:`manage_tag` action to your ModelAdmin::
